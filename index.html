@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <!-- Google Fonts: Creepster -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+    /* Removed .card styling */
+        h1 {
+            margin-bottom: 1.2em;
+            color: #0e0d11;
+            font-size: 2em;
+            font-weight: 600;
+        }
+        #pressMeBtn {
+            display: block;
+            margin: 0 auto;
+            background: linear-gradient(90deg, #2a7ae2 0%, #6c47ff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 2em 4em;
+            font-size: 2.2em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 24px rgba(44, 62, 80, 0.12);
+            transition: background 0.2s, transform 0.1s, filter 0.2s;
+            letter-spacing: 0.03em;
+        }
+        #pressMeBtn:disabled {
+            background: #bfc9d9;
+            color: #e0e7ef;
+            cursor: not-allowed;
+            filter: grayscale(0.4) brightness(0.95);
+        }
+        #pressMeBtn:not(:disabled):hover {
+            background: linear-gradient(90deg, #6c47ff 0%, #2a7ae2 100%);
+            transform: translateY(-4px) scale(1.06);
+        }
+        #result {
+            margin-top: 2em;
+            color: #2a7ae2;
+            font-size: 2em;
+            min-height: 2em;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            text-align: center;
+            font-family: 'Creepster', cursive, sans-serif;
+        }
+        .center-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="center-col">
+        <button id="pressMeBtn">PRESS ME</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        const resultDiv = document.getElementById('result');
+        const btn = document.getElementById('pressMeBtn');
+        let timers = [];
+
+        btn.addEventListener('click', function() {
+            // Disable and grey out the button
+            btn.disabled = true;
+            // Clear any previous timers and text
+            timers.forEach(t => clearTimeout(t));
+            timers = [];
+            resultDiv.innerHTML = '';
+
+            // Show first message
+            const msg1 = document.createElement('div');
+            msg1.textContent = 'Something happened...';
+            msg1.style.fontFamily = "'Creepster', cursive, sans-serif";
+            msg1.style.color = '#2a7ae2';
+            resultDiv.appendChild(msg1);
+
+            // After 2s, show second message below
+            timers.push(setTimeout(() => {
+                const msg2 = document.createElement('div');
+                msg2.textContent = 'BECAUSE OF YOU!';
+                msg2.style.marginTop = '0.7em';
+                msg2.style.fontFamily = "'Creepster', cursive, sans-serif";
+                msg2.style.color = '#2a7ae2';
+                resultDiv.appendChild(msg2);
+            }, 2000));
+
+            // After 4s, clear both messages
+            timers.push(setTimeout(() => {
+                resultDiv.innerHTML = '';
+            }, 4000));
+
+            // After 6s, re-enable the button
+            timers.push(setTimeout(() => {
+                btn.disabled = false;
+            }, 6000));
+        });
+    </script>
+</body>
+</html>
